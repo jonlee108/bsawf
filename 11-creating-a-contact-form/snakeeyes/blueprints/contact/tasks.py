@@ -24,3 +24,15 @@ def deliver_contact_email(email, message):
                           template='contact/mail/index', ctx=ctx)
 
     return None
+
+@celery.task()
+def deliver_feedback_email(email, message):
+    ctx = {'email': email, 'message': message}
+
+    send_template_message(subject='Feedback',
+                        sender=email,
+                        recipients=[celery.conf.get('MAIL_USERNAME')],
+                        reply_to=email,
+                        template='contact/mail/feedback', ctx=ctx)
+
+    return None

@@ -7,9 +7,9 @@ from flask import (
     render_template)
 
 from snakeeyes.blueprints.contact.forms import ContactForm
+from snakeeyes.blueprints.contact.forms import FeedbackForm
 
 contact = Blueprint('contact', __name__, template_folder='templates')
-
 
 @contact.route('/contact', methods=['GET', 'POST'])
 def index():
@@ -23,6 +23,34 @@ def index():
                                     request.form.get('message'))
 
         flash('Thanks, expect a response shortly.', 'success')
+        
+        print("HELLO FROM CONTACT")
+        
         return redirect(url_for('contact.index'))
 
     return render_template('contact/index.html', form=form)
+
+@contact.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    form = FeedbackForm()
+    print("kjsckljsakljdsa")
+
+    if form.validate_on_submit():
+        # This prevents circular imports
+        from snakeeyes.blueprints.contact.tasks import deliver_feedback_email
+
+        deliver_feedback_email.delay(request.form.get('email'),
+                                    request.form.get('message'))
+                                    
+        flash('Thanks, expect a response to your feedback shortly.', 'success')
+
+        feedbackurl = url_for('contact.feedback')
+        contacturl = url_for('contact.index')
+        print(f"feedback url: {feedbackurl}")
+        print(f"contact url: {contacturl}")
+        print("HELLO FROM FEEDBACK")
+
+        return redirect(url_for('contact.feedback'))
+        
+    return render_template('contact/feedback.html', form=form)
+    

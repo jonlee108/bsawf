@@ -6,6 +6,13 @@ from wtforms.validators import DataRequired, Length
 
 class ContactForm(Form):
     email = EmailField("What's your e-mail address?",
-                       [DataRequired(), Length(3, 254)])
+                    [DataRequired(), Length(3, 254)])
     message = TextAreaField("What's your question or issue?",
-                            [DataRequired(), Length(1, 8192)])
+                    [DataRequired(), Length(1, 8192)])
+
+class FeedbackForm(Form):    
+    email = EmailField("What's your e-mail address?",
+                    [DataRequired(), Length(3, 254)])
+    message = TextAreaField("What feedback would you like to share with us?",
+                    [DataRequired(), Length(1, 8192)])
+                        
