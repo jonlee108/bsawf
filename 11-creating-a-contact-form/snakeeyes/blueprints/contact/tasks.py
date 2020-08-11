@@ -26,8 +26,8 @@ def deliver_contact_email(email, message):
     return None
 
 @celery.task()
-def deliver_feedback_email(email, message):
-    ctx = {'email': email, 'message': message}
+def deliver_feedback_email(email, message, nps):
+    ctx = {'email': email, 'message': message, 'nps': nps}
 
     send_template_message(subject='Feedback',
                         sender=email,

@@ -1,3 +1,5 @@
 {{ email }} gave the following feedback:
 
 {{ message }}
+
+{{ nps }}

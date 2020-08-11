@@ -39,16 +39,14 @@ def feedback():
         # This prevents circular imports
         from snakeeyes.blueprints.contact.tasks import deliver_feedback_email
 
-        deliver_feedback_email.delay(request.form.get('email'),
-                                    request.form.get('message'))
+        print(f"request 09129d {request}")
+
+        deliver_feedback_email.delay(
+            request.form.get('email'),
+            request.form.get('message'), 
+            request.form.get('nps'))
                                     
         flash('Thanks, expect a response to your feedback shortly.', 'success')
-
-        feedbackurl = url_for('contact.feedback')
-        contacturl = url_for('contact.index')
-        print(f"feedback url: {feedbackurl}")
-        print(f"contact url: {contacturl}")
-        print("HELLO FROM FEEDBACK")
 
         return redirect(url_for('contact.feedback'))
         

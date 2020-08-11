@@ -1,5 +1,5 @@
 {% extends 'layouts/base.html' %}
-{% import 'macros/form.html' as f with context %}
+{% import 'macros/form.html.j2' as f with context %}
 
 {% block title %}Give us your feedback{% endblock %}
 {% block meta_description %}Give us your feedback{% endblock %}
@@ -12,6 +12,9 @@
 
         {% call f.form_group(form.email, css_class='margin-bottom',
                              placeholder='Enter email address here please') %}
+        {% endcall %}
+
+        {% call f.form_group(form.nps, css_class='margin-bottom') %}
         {% endcall %}
 
         {% call f.form_group(form.message, css_class='margin-bottom',

@@ -33,6 +33,11 @@
   {{ f(type='checkbox', **kwargs) }} {{ f.label }}
 {%- endmacro -%}
 
+{# Render a radio field. #}
+{%- macro radio_field(f) -%}
+  {{ field_label(f) }}
+  {{ f(type='radio', **kwargs) }} 
+{% endmacro %}
 
 {# Render a form group with errors for various field types. #}
 {%- macro form_group(f, css_class='') -%}
@@ -43,6 +48,9 @@
   {% if f.type == 'BooleanField' %}
       <div class="checkbox {{ css_class }}">
     {{ checkbox_field(f, **kwargs) }}
+  {% elif f.type == 'RadioField' %}
+    <div class="form-group radio {{ css_class }}">
+    {{ radio_field(f, **kwargs) }}
   {% else %}
       <div class="form-group {{ css_class }}">
     {{ field_label(f) }}
